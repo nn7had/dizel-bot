@@ -1,13 +1,9 @@
 {
-  "token": "BOT_TOKEN_BURAYA",
-  "guildId": "SUNUCU_ID_BURAYA",
-
   "aboneRolId": "",
   "aboneYetkiliRolId": "",
   "moderatorRolId": "",
   "cezaliRolId": "",
   "uyeRolId": "",
-
   "logKanalId": "",
   "uyeLogKanalId": "",
   "hosgeldinKanalId": "",
@@ -15,7 +11,6 @@
   "kanitLogKanalId": "",
   "mediaKanalId": "",
   "sesKanalId": "",
-
   "ticketKategoriId": "",
   "ticketLogKanalId": ""
 }
