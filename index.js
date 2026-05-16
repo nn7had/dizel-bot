@@ -9,6 +9,13 @@ const path = require('path');
 const configPath = path.join(__dirname, 'config.json');
 let config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 
+// Token ve GuildId environment variable'dan al
+const TOKEN = process.env.TOKEN;
+const GUILD_ID = process.env.GUILD_ID;
+
+if (!TOKEN) { console.error('❌ TOKEN environment variable eksik!'); process.exit(1); }
+if (!GUILD_ID) { console.error('❌ GUILD_ID environment variable eksik!'); process.exit(1); }
+
 const uyarilar = new Map();
 
 const client = new Client({
@@ -159,9 +166,9 @@ client.once('ready', async () => {
   console.log(`✅ Bot aktif: ${client.user.tag}`);
   client.user.setActivity('Dizel Works™ Gururla sunar.', { type: 3 });
 
-  const rest = new REST({ version: '10' }).setToken(config.token);
+  const rest = new REST({ version: '10' }).setToken(TOKEN);
   try {
-    await rest.put(Routes.applicationGuildCommands(client.user.id, config.guildId), { body: commands });
+    await rest.put(Routes.applicationGuildCommands(client.user.id, GUILD_ID), { body: commands });
     console.log('✅ Slash komutları kaydedildi.');
   } catch (err) {
     console.error('❌ Komut kaydı hatası:', err);
@@ -175,7 +182,7 @@ client.once('ready', async () => {
 // ─────────────────────────────────────────────
 function joinVoiceChannel() {
   if (!config.sesKanalId) return;
-  const guild = client.guilds.cache.get(config.guildId);
+  const guild = client.guilds.cache.get(GUILD_ID);
   if (!guild) return;
   const channel = guild.channels.cache.get(config.sesKanalId);
   if (!channel) return;
@@ -974,7 +981,7 @@ function saveConfig() {
 process.on('unhandledRejection', err => console.error('Unhandled rejection:', err));
 process.on('uncaughtException', err => console.error('Uncaught exception:', err));
 
-client.login(config.token).catch(err => {
+client.login(TOKEN).catch(err => {
   console.error('❌ Giriş hatası:', err.message);
   process.exit(1);
 });
